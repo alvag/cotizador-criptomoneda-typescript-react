@@ -1,3 +1,3 @@
 export const Constants = Object.freeze({
-    CONSTANT: ''
+    COINMARKET_API: 'https://api.coinmarketcap.com/v2/'
 });
