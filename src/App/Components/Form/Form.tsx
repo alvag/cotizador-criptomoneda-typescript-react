@@ -5,6 +5,7 @@ import './Form.css';
 
 interface IProps {
     cryptoCurrencies: ICryptoCurrency[];
+    getValues: (params: any) => void;
 }
 
 class Form extends Component<IProps> {
@@ -48,8 +49,7 @@ class Form extends Component<IProps> {
         const currency = this.currency.current!.value;
         const cryptoCurrency = this.cryptoCurrency.current!.value;
 
-        console.log(currency);
-        console.log(cryptoCurrency);
+        this.props.getValues({ currency, cryptoCurrency });
     }
 }
 

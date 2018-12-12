@@ -1,8 +1,13 @@
 import { Constants } from '../Constants';
 
 export default class Utils {
-    public static getAPIUrl = (type: string): string => {
-        return `${Constants.COINMARKET_API}${type}`;
+    public static getAPIUrl = (params?: any): string => {
+        let url = `${Constants.COINMARKET_API}/ticker`;
+
+        if (params) {
+            url += `/${params.cryptoCurrency}/?convert=${params.currency}`;
+        }
+        return url;
     }
 
     public static objectToArray = (object: any): any[] => {
