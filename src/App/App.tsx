@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-
 import axios from 'axios';
-
 import './App.css';
 import Form from './Components/Form';
 import Header from './Components/Header';
 import { ICryptoCurrency } from './Interfaces';
 import Utils from './Utils';
+import Result from './Components/Result';
 
 interface IAppState {
     cotizacion: any;
     cryptoCurrencies: ICryptoCurrency[];
     currency: string;
+    loading: boolean;
 }
 
 class App extends Component<{}, IAppState> {
@@ -19,7 +19,8 @@ class App extends Component<{}, IAppState> {
     public state: IAppState = {
         cotizacion: {},
         cryptoCurrencies: [],
-        currency: ''
+        currency: '',
+        loading: false
     };
 
     public async componentDidMount() {
@@ -27,6 +28,7 @@ class App extends Component<{}, IAppState> {
     }
 
     public render() {
+
         return (
             <div className="App">
                 <Header />
@@ -37,8 +39,28 @@ class App extends Component<{}, IAppState> {
                             cryptoCurrencies={this.state.cryptoCurrencies}
                             getValues={this.getValues}
                         />
+
+                        {this.state.loading ? this.spinner() :
+                            <Result
+                                cotizacion={this.state.cotizacion}
+                                currency={this.state.currency}
+                            />
+                        }
+
                     </div>
                 </div>
+            </div>
+        );
+    }
+
+    spinner = () => {
+        return (
+            <div className="spinner">
+                <div className="rect1"></div>
+                <div className="rect2"></div>
+                <div className="rect3"></div>
+                <div className="rect4"></div>
+                <div className="rect5"></div>
             </div>
         );
     }
@@ -46,11 +68,16 @@ class App extends Component<{}, IAppState> {
     private getValues = async (params: any) => {
         const url = Utils.getAPIUrl(params);
 
+        this.setState({ loading: true });
+
         await axios.get(url).then((response) => {
-            this.setState({
-                cotizacion: response.data.data,
-                currency: params.currency
-            });
+            setTimeout(() => {
+                this.setState({
+                    cotizacion: response.data.data,
+                    currency: params.currency,
+                    loading: false
+                });
+            }, 2000);
         }).catch((error) => {
             console.log(error);
         });

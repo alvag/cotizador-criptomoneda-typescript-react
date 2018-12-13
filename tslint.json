@@ -10,7 +10,7 @@
             true,
             "always"
         ],
-        "no-console": true,
+        "no-console": false,
         "quotemark": [
             true,
             "single",
@@ -24,6 +24,8 @@
                 "singleline": "never"
             }
         ],
-        "jsx-no-multiline-js": false
+        "jsx-no-multiline-js": false,
+        "member-access": false,
+        "ordered-imports": false
     }
 }
